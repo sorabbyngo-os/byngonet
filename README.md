@@ -1,40 +1,38 @@
 # Byngonet
-> **Distributed Mesh Network Layer** — by Sorabbyngo Labs · *Rhythm of Digital Life*
+> **AI-Native Distributed Mesh Network Protocol** — Sorabbyngo Labs
 
-## What is Byngonet?
-Byngonet is the network identity and mesh routing layer of SORABBYNGO OS. Every node in the mesh is cryptographically identified via NodeID before any traffic is accepted. Built for African infrastructure — offline-first, resilient, adversarial-environment ready.
+TCP/IP connects machines. Byngonet connects intelligent systems. Every packet knows what it is, who sent it, how trusted the sender is, and what compute it needs. The network is a participant in the intelligence.
 
-## Stack
-| Component | Detail |
-|---|---|
-| **NodeID integration** | Hardware cryptographic identity per node |
-| **Identity-aware routing** | No anonymous nodes in the mesh |
-| **Netfilter hooks** | Packet tagging at kernel level v0.3 |
-| **Kernel module** | Linux 6.19.10, GCC 12, BTF clean |
+## Architecture
+
+### Kernel Layer (Phase 1 — Live)
+- byngonet_identity v0.2 — NodeID cryptographic verification
+- /proc/byngonet_stats — live node identity stats
+
+### Protocol Layer (Phase 5)
+- AISP: AI_TASK, AI_RESULT, AI_KNOW, AI_SYNC, AI_PROBE
+- AF_BYNGONET socket family
+- Post-quantum: Kyber-1024 + Dilithium3
+
+### Swarm Layer (Phase 5)
+- Node discovery and trust scoring agents
+- Byzantine fault-tolerant offline sync
+- Federated intelligence across mesh
+
+## Security Zones
+| Zone | Eligibility | Permitted |
+|---|---|---|
+| PUBLIC | External nodes | AI_PROBE only |
+| TRUSTED | Known nodes trust>0.7 | Full AISP |
+| PERSONAL | User own devices | Full + memory sync |
+| CRITICAL | Medical nodes | All + emergency alerts |
 
 ## Status
-🟢 Active — v0.2 stable, v0.3 in development
+| Component | Status |
+|---|---|
+| byngonet_identity v0.2 | Live |
+| Netfilter hook v0.3 | In development |
+| AISP protocol | Phase 5 |
+| Post-quantum security | Month 6+ |
 
-## Part of SORABBYNGO OS
-```
-┌─────────────────────────────────────────────────┐
-│              SORABBYNGO AI OS                   │
-├─────────────────────────────────────────────────┤
-│  Chameha        — AI personality and interface  │
-├─────────────────────────────────────────────────┤
-│  Novela         — AI health intelligence        │
-├─────────────────────────────────────────────────┤
-│  Byngox         — Swarm reasoning engine        │
-├─────────────────────────────────────────────────┤
-│  CML            — Cognitive mediation layer     │
-├─────────────────────────────────────────────────┤
-│  Byngonet       — Distributed mesh network      │
-├─────────────────────────────────────────────────┤
-│  SORABBYNGO OS  — Custom Linux 6.19.10 kernel   │
-└─────────────────────────────────────────────────┘
-```
-
-## About
-**Sorabbyngo Company** — Kisii, Kenya
-*Building Africa sovereign digital infrastructure — from the kernel up.*
-© 2026 Sorabbyngo Company. All rights reserved.
+**Sorabbyngo Company** — Kisii, Kenya | 2026
