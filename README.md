@@ -1,38 +1,46 @@
-# Byngonet
-> **AI-Native Distributed Mesh Network Protocol** — Sorabbyngo Labs
+# ByngoNet
 
-TCP/IP connects machines. Byngonet connects intelligent systems. Every packet knows what it is, who sent it, how trusted the sender is, and what compute it needs. The network is a participant in the intelligence.
+AI-native distributed mesh network for Sorabbyngo OS.
+Connects every Sorabbyngo device into an intelligent mesh.
 
-## Architecture
+## Protocol — AISP (AI Intelligence Sharing Protocol)
 
-### Kernel Layer (Phase 1 — Live)
-- byngonet_identity v0.2 — NodeID cryptographic verification
-- /proc/byngonet_stats — live node identity stats
+Every packet carries identity, type, payload, and signature.
 
-### Protocol Layer (Phase 5)
-- AISP: AI_TASK, AI_RESULT, AI_KNOW, AI_SYNC, AI_PROBE
-- AF_BYNGONET socket family
-- Post-quantum: Kyber-1024 + Dilithium3
-
-### Swarm Layer (Phase 5)
-- Node discovery and trust scoring agents
-- Byzantine fault-tolerant offline sync
-- Federated intelligence across mesh
-
-## Security Zones
-| Zone | Eligibility | Permitted |
-|---|---|---|
-| PUBLIC | External nodes | AI_PROBE only |
-| TRUSTED | Known nodes trust>0.7 | Full AISP |
-| PERSONAL | User own devices | Full + memory sync |
-| CRITICAL | Medical nodes | All + emergency alerts |
-
-## Status
-| Component | Status |
+| Message Type | Purpose |
 |---|---|
-| byngonet_identity v0.2 | Live |
-| Netfilter hook v0.3 | In development |
-| AISP protocol | Phase 5 |
-| Post-quantum security | Month 6+ |
+| AI_TASK | Dispatch inference task to remote node |
+| AI_RESULT | Return result from remote inference |
+| AI_KNOW | Share knowledge update across mesh |
+| AI_SYNC | Synchronize model weights or embeddings |
+| AI_PROBE | Discover and verify node identity |
 
-**Sorabbyngo Company** — Kisii, Kenya | 2026
+## Security zones
+
+| Zone | Min trust | Allowed |
+|---|---|---|
+| PUBLIC | 0.0 | AI_PROBE only |
+| TRUSTED | 0.7 | All types |
+| PERSONAL | 1.0 | All types |
+| CRITICAL | 1.0 | All types |
+
+## Node tiers
+
+| Tier | Device | Tasks | Model tier |
+|---|---|---|---|
+| T1_X86 | Server | 8 concurrent | 3 |
+| T1_ARM64 | ARM server | 4 concurrent | 2 |
+| T2_ARM64 | SBC/Gateway | 2 concurrent | 1 |
+| T3_ARM32 | Edge device | 1 concurrent | 1 |
+
+## NodeID
+
+Every node identity derives from the hardware NodeID read from
+/proc/sorabbyngo/nodeid (sorabbyngo_nodeid.ko kernel module).
+No NodeID = no network participation.
+
+## Offline-first
+
+Nodes queue updates when disconnected.
+On reconnect, OfflineSync flushes queued AI_KNOW and AI_SYNC packets.
+Byzantine fault-tolerant — mesh survives minority node failures.
