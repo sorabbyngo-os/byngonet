@@ -1,7 +1,4 @@
+*.key
+*.pyc
 __pycache__/
-*.py[cod]
-*.so
-*.ko
-*.o
-.env
-venv/
+~/.sorabbyngo/
