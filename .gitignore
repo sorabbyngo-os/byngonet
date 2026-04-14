@@ -2,3 +2,7 @@
 *.pyc
 __pycache__/
 ~/.sorabbyngo/
+# Python
+__pycache__/
+*.pyc
+*.pyo
