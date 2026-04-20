@@ -160,13 +160,20 @@ class ByngonetNode:
             line, buf = buf.split("\r\n", 1)
             if line.startswith("MSG "):
                 parts = line.split()
-                if len(parts) >= 4:
+                # NATS MSG format: MSG <subject> <sid> [reply] <#bytes>
+                # parts[3] is reply subject when len==5, byte count when len==4
+                if len(parts) == 4:
                     subject = parts[1]
                     nbytes  = int(parts[3])
-                    if len(buf) >= nbytes:
-                        payload_raw = buf[:nbytes]
-                        buf = buf[nbytes:].lstrip("\r\n")
-                        self._on_mesh_event(subject, payload_raw)
+                elif len(parts) == 5:
+                    subject = parts[1]
+                    nbytes  = int(parts[4])
+                else:
+                    continue
+                if len(buf) >= nbytes:
+                    payload_raw = buf[:nbytes]
+                    buf = buf[nbytes:].lstrip("\r\n")
+                    self._on_mesh_event(subject, payload_raw)
         return buf
 
     def _on_mesh_event(self, subject: str, raw: str):

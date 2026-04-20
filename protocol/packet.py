@@ -24,15 +24,24 @@ class ByngoPacket:
     zone: str = "PUBLIC"
 
     def sign(self, private_key: str) -> None:
-        """Sign packet with node private key."""
+        """
+        Sign packet with node private key.
+        TODO Phase 5: Replace with proper Ed25519 signing via cryptography library.
+        Current implementation uses HMAC-SHA256 as a placeholder.
+        """
+        import hmac
         content = f"{self.packet_id}{self.packet_type}{self.sender_node_id}{self.timestamp}"
-        self.signature = hashlib.sha256(
-            f"{content}{private_key}".encode()
+        self.signature = hmac.new(
+            private_key.encode(), content.encode(), hashlib.sha256
         ).hexdigest()
 
     def verify(self, sender_fingerprint: str) -> bool:
-        """Verify packet signature."""
-        return len(self.signature) == 64
+        """
+        Verify packet signature against sender fingerprint.
+        TODO Phase 5: Replace with proper Ed25519 public key verification.
+        Current implementation checks signature is non-empty and correct length.
+        """
+        return bool(self.signature) and len(self.signature) == 64
 
     def is_expired(self) -> bool:
         return time.time() - self.timestamp > self.ttl
