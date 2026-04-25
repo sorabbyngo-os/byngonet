@@ -1,0 +1,49 @@
+[Unit]
+Description=Byngonet — AI-native mesh network node
+Documentation=https://github.com/sorabbyngo-Labs/byngonet
+After=network.target sorabbyngo-nodeid.service nats.service
+Requires=sorabbyngo-nodeid.service
+Wants=nats.service
+
+[Service]
+Type=simple
+User=sorabbyngo
+Group=sorabbyngo
+WorkingDirectory=/opt/sorabbyngo/byngonet
+EnvironmentFile=/etc/sorabbyngo/environment
+Environment=BYNGONET_TIER=T1_X86
+Environment=BYNGONET_PORT=7422
+Environment=NATS_URL=nats://localhost:4222
+Environment=LOG_LEVEL=INFO
+
+ExecStart=/usr/bin/python3 /opt/sorabbyngo/byngonet/main.py \
+    --tier ${BYNGONET_TIER} \
+    --port ${BYNGONET_PORT}
+
+Restart=on-failure
+RestartSec=10s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=byngonet
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log/sorabbyngo /var/lib/sorabbyngo /home/sorabbyngo/.sorabbyngo
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+RestrictRealtime=yes
+
+# Allow UDP mesh traffic on port 7422
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+SystemCallFilter=@system-service @network-io
+SystemCallErrorNumber=EPERM
+
+[Install]
+WantedBy=multi-user.target
