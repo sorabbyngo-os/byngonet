@@ -488,11 +488,14 @@ class TestByngoRouter:
 
 class TestNodeIdentity:
 
-    def test_get_nodeid_missing_raises(self):
+    def test_get_nodeid_missing_falls_back(self):
         from protocol.node_identity import get_nodeid
-        with patch("builtins.open", side_effect=FileNotFoundError):
-            with pytest.raises(RuntimeError, match="NodeID driver not loaded"):
-                get_nodeid()
+        # get_nodeid has multiple fallbacks — should never raise
+        # when kernel driver is missing it falls back to hostname/MAC
+        with patch("pathlib.Path.exists", return_value=False):
+            result = get_nodeid()
+        assert isinstance(result, str)
+        assert len(result) > 0
 
     def test_get_nodeid_reads_file(self):
         from protocol.node_identity import get_nodeid
