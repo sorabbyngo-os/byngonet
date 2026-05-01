@@ -15,6 +15,7 @@ import time
 from typing import Callable, Dict, Optional
 
 from .packet import ByngoPacket
+from .trust_store import TrustStore
 from .message_types import SECURITY_ZONES, AI_PROBE
 
 log = logging.getLogger("byngonet.transport")
@@ -58,6 +59,7 @@ class ByngoTransport:
         # Dedup cache — prevent replay attacks
         self._seen_packets: set = set()
         self._seen_max = 10000
+        self._trust_store = TrustStore()
 
     # ── Lifecycle ─────────────────────────────────────────────────────────────
 
