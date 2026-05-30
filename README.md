@@ -83,10 +83,10 @@ pytest tests/ -v  # 99 passing
 
 | Repo | Role |
 |---|---|
-| [security](https://github.com/sorabbyngo-Labs/security) | 7-ring defence |
-| [dmz](https://github.com/sorabbyngo-Labs/dmz) | PRIME zone isolation |
-| [identity-core](https://github.com/sorabbyngo-Labs/identity-core) | SUID + NodeID |
-| [sorabbyngo-cyberwall](https://github.com/sorabbyngo-Labs/sorabbyngo-cyberwall) | Security layer |
+| [security](https://github.com/citadel-sec/security) | 7-ring defence |
+| [dmz](https://github.com/sorabbyngo-os/dmz) | PRIME zone isolation |
+| [identity-core](https://github.com/sorabbyngo-os/identity-core) | SUID + NodeID |
+| [sorabbyngo-cyberwall](https://github.com/citadel-sec/sorabbyngo-cyberwall) | Security layer |
 
 ---
 
